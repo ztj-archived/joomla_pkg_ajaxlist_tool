@@ -1,5 +1,5 @@
 # joomla_lib_field_ajaxlist
-&nbsp;&nbsp;&nbsp;&nbsp; 这是一个功能强大的动态ajax列表field，其强大的功能大家自己体验吧：http://www.phpsj.com/ajaxlistfield.html。
+&nbsp;&nbsp;&nbsp;&nbsp; 这是一个功能强大的动态ajax列表field，其强大的功能大家自己体验吧：http://www.phpsj.com/ajaxlistfield.html
 
 ##使用示例：
 ```xml
