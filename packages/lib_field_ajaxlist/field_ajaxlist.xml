@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="library" version="3.1" method="upgrade">
+	<name>ajaxlist</name>
+	<libraryname>joomla/form/fields</libraryname>
+	<version>1.0</version>
+    <description>field-ajaxlist</description>
+    <creationDate>2016-04-09</creationDate>
+    <author>ZhangTianJie</author>
+    <authorEmail>807261773@qq.com</authorEmail>
+    <authorUrl>www.phpsj.com</authorUrl>
+	<copyright>Phpsj.com All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<files>
+        <filename>ajaxlist.php</filename>
+	</files>
+</extension>

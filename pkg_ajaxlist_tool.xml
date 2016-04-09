@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="3.1" method="upgrade">
+  <name>Ajax List Tool Package</name>
+  <author>ZhangTianJie</author>
+  <creationDate>2016-04-09</creationDate>
+  <packagename>ajaxlisttool</packagename>
+  <version>1.0</version>
+  <url>http://www.phpsj.com</url>
+  <license>GNU General Public License version 2 or later</license>
+  <packager>ZhangTianJie</packager>
+  <packagerurl>http://www.phpsj.com</packagerurl>
+  <description>This is a collection of Ajax Joomla tools, is a collection of field.</description>
+  <files folder="packages">
+    <file type="library" id="lib_field_ajaxlist">lib_field_ajaxlist</file>
+    <file type="plugin" id="plg_ajax_articles" group="ajax">plg_ajax_articles</file>
+    <file type="plugin" id="plg_ajax_categories" group="ajax">plg_ajax_categories</file>
+    <file type="plugin" id="plg_ajax_tags" group="ajax">plg_ajax_tags</file>
+    <file type="plugin" id="plg_ajax_users" group="ajax">plg_ajax_users</file>
+  </files>
+</extension>

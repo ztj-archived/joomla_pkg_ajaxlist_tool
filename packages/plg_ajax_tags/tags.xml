@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="ajax" method="upgrade">
+	<name>plg_ajax_tags</name>
+    <version>1.0</version>
+    <creationDate>2016-04-09</creationDate>
+    <author>ZhangTianJie</author>
+    <authorEmail>807261773@qq.com</authorEmail>
+    <authorUrl>www.phpsj.com</authorUrl>
+    <copyright>Phpsj.com All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <description>Joomla Ajax Tags Plugin</description>
+	<files>
+		<filename plugin="tags">tags.php</filename>
+	</files>
+</extension>
