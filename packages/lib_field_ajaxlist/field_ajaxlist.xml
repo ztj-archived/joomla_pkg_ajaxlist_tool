@@ -2,7 +2,7 @@
 <extension type="library" version="3.1" method="upgrade">
 	<name>ajaxlist</name>
 	<libraryname>joomla/form/fields</libraryname>
-	<version>1.0</version>
+	<version>1.1</version>
     <description>field-ajaxlist</description>
     <creationDate>2016-04-09</creationDate>
     <author>ZhangTianJie</author>

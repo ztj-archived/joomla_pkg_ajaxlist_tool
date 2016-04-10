@@ -14,7 +14,10 @@ class plgAjaxCategories extends JPlugin {
     function onAjaxCategories() {
         $db = JFactory::getDbo();
 
-        $keyword = trim(JFactory::getApplication()->input->get('keyword'));
+        $keyword = trim(JFactory::getApplication()->input->get('keyword',null,'string'));
+        if(empty($keyword)) {
+            return json_encode(array());
+        }
         $keyword = $db->quote('%'.$db->escape($keyword,true).'%',false);
 
         $query = $db->getQuery(true);

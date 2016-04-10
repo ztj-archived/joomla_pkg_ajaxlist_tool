@@ -70,6 +70,18 @@ class JFormFieldAjaxList extends JFormFieldList {
         $login = isset($this->element['login'])?$this->element['login']:null;
 
         $ch = curl_init();
+        switch(strtoupper($this->method)) {
+            case 'GET':
+                curl_setopt($ch,CURLOPT_HTTPGET,true);
+                break;
+            case 'POST':
+                curl_setopt($ch,CURLOPT_POST,true);
+                break;
+            case 'PUT':
+            default:
+                curl_setopt($ch,CURLOPT_CUSTOMREQUEST,strtoupper($method));
+                break;
+        }
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_TIMEOUT,5);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);

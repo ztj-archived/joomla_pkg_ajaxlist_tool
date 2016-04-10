@@ -14,7 +14,7 @@ class plgAjaxArticles extends JPlugin {
     function onAjaxArticles() {
         $db = JFactory::getDbo();
 
-        $keyword = trim(JFactory::getApplication()->input->get('keyword'));
+        $keyword = trim(JFactory::getApplication()->input->get('keyword',null,'string'));
         if(empty($keyword)) {
             return json_encode(array());
         }
