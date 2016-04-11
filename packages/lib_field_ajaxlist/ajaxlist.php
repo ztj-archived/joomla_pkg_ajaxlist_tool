@@ -46,8 +46,6 @@ class JFormFieldAjaxList extends JFormFieldList {
             'jsonTermKey' => $this->key,
             'minTermLength' => $mintermlength));
 
-        JHtml::_('jquery.framework');
-        JHtml::_('script','jui/ajax-chosen.min.js',false,true,false,false);
         JHtml::_('formbehavior.ajaxchosen',$chosenAjaxSettings);
 
         $this->multiple = true;
@@ -56,6 +54,11 @@ class JFormFieldAjaxList extends JFormFieldList {
     protected function getOptions() {
         $options = parent::getOptions();
         if(!empty($this->value)) {
+            if(is_object($this->value) && is_a($this->value,'JObject')) {
+                $this->value = $this->value->getProperties();
+            } else {
+                $this->value = (array )$this->value;
+            }
             $url = $this->url.'&'.$this->key.'=default-'.implode('-',$this->value);
             $json = $this->curl_file_get_contents($url);
             $defaultOptions = json_decode($json);
