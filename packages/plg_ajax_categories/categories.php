@@ -12,24 +12,25 @@ defined('_JEXEC') or die;
 
 class plgAjaxCategories extends JPlugin {
     function onAjaxCategories() {
-        $db = JFactory::getDbo();
-
-        $keyword = trim(JFactory::getApplication()->input->get('keyword',null,'string'));
+        $input = JFactory::getApplication()->input;
+        $default = $input->getInt('default',0);
+        $keyword = trim($input->get('keyword',null,'string'));
         if(empty($keyword)) {
             return json_encode(array());
         }
-        $keyword = $db->quote('%'.$db->escape($keyword,true).'%',false);
 
+        $db = JFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select('id as value,title as text');
         $query->from($db->quoteName('#__categories'));
 
-        if(substr($keyword,2,8) != 'default-') {
-            $query->where('title like '.$keyword);
+        if($default) {
+            $keyword=explode(',',$keyword);
+            JArrayHelper::toInteger($keyword);
+            $query->where('id in ('.implode(',',$keyword).')');
         } else {
-            $ids = explode('-',substr($keyword,10,-2));
-            JArrayHelper::toInteger($ids);
-            $query->where('id in ('.implode(',',$ids).')');
+            $keyword = $db->quote('%'.$db->escape($keyword,true).'%',false);
+            $query->where('title like '.$keyword);
         }
 
         $query->where('published = 1 AND id > 1');

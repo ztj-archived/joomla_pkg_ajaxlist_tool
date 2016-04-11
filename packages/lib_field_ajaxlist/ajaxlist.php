@@ -56,13 +56,16 @@ class JFormFieldAjaxList extends JFormFieldList {
         if(!empty($this->value)) {
             if(is_object($this->value) && is_a($this->value,'JObject')) {
                 $this->value = $this->value->getProperties();
+                $value = implode(',',$this->value);
+            } elseif(is_array($this->value)) {
+                $value = implode(',',$this->value);
             } else {
-                $this->value = (array )$this->value;
+                $value = $this->value;
             }
-            $url = $this->url.'&'.$this->key.'=default-'.implode('-',$this->value);
+            $url = $this->url.'&default=1&'.$this->key.'='.$value;
             $json = $this->curl_file_get_contents($url);
             $defaultOptions = json_decode($json);
-            foreach($defaultOptions as $option) {
+            foreach((array )$defaultOptions as $option) {
                 $option->selected = true;
                 $options[] = $option;
             }
