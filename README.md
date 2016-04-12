@@ -1,6 +1,10 @@
 # joomla_lib_field_ajaxlist
 &nbsp;&nbsp;&nbsp;&nbsp; 这是一个功能强大的动态ajax列表field，其强大的功能大家自己体验吧：http://www.phpsj.com/ajaxlistfield.html
 
+##相关链接
+* 最新版下载：http://bbs.phpsj.com/thread-279-1-1.html
+* 演示地址：http://www.phpsj.com/ajaxlistfield.html
+
 ##使用示例：
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -9,9 +13,9 @@
     <field name="articles" type="ajaxlist" label="Articles" plugin="articles" multiple="true"/>  
     <field name="categories" type="ajaxlist" label="Categories" plugin="categories" multiple="true"/>  
     <field name="tags" type="ajaxlist" label="Tags" plugin="tags" multiple="true"/> 
-	<field name="articles" type="ajaxlist" label="Articles" plugin="articles"/> 
-    <field name="categories" type="ajaxlist" label="Categories" plugin="categories"/> 
-    <field name="tags" type="ajaxlist" label="Tags" plugin="tags"/> 
+    <field name="article" type="ajaxlist" label="Articles" plugin="articles"/> 
+    <field name="categorie" type="ajaxlist" label="Categories" plugin="categories"/> 
+    <field name="tag" type="ajaxlist" label="Tags" plugin="tags"/> 
   </fieldset> 
 </form>
 ```
