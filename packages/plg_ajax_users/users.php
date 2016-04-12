@@ -35,6 +35,11 @@ class plgAjaxUsers extends JPlugin {
 
         $query->order($db->quoteName('id').' DESC');
         $db->setQuery($query,0,10);
-        return json_encode($db->loadObjectList());
+        $rows = $db->loadObjectList();
+        if(empty($rows)) {
+            return json_encode(array());
+        }
+        array_unshift($rows,array('value' => '','text' => ''));
+        return json_encode($rows);
     }
 }

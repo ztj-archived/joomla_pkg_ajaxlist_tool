@@ -45,10 +45,10 @@ class JFormFieldAjaxList extends JFormFieldList {
             'dataType' => 'json',
             'jsonTermKey' => $this->key,
             'minTermLength' => $mintermlength));
-
+        if(!$this->multiple) {
+            JHtml::_('formbehavior.chosen',$cssId,null,array('disable_search_threshold' => 0));
+        }
         JHtml::_('formbehavior.ajaxchosen',$chosenAjaxSettings);
-
-        $this->multiple = true;
         return parent::getInput();
     }
     protected function getOptions() {
@@ -65,7 +65,16 @@ class JFormFieldAjaxList extends JFormFieldList {
             $url = $this->url.'&default=1&'.$this->key.'='.$value;
             $json = $this->curl_file_get_contents($url);
             $defaultOptions = json_decode($json);
+        }
+        if(empty($defaultOptions) && (!$this->multiple)) {
+            $defaultOptions = array(array('value' => '','text' => ''));
+            $defaultOptions = $defaultOptions;
+        }
+        if(!empty($defaultOptions)) {
             foreach((array )$defaultOptions as $option) {
+                if(!is_object($option)) {
+                    $option = (object)$option;
+                }
                 $option->selected = true;
                 $options[] = $option;
             }

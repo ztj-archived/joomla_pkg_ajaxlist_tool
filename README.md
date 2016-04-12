@@ -31,3 +31,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;2016-04-10 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.1 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修正中文输入的支持问题 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;2016-04-11 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.2 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修正value为对象和其他bug <br>
+&nbsp;&nbsp;&nbsp;&nbsp;2016-04-12 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.3 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;增加支持单选 <br>
