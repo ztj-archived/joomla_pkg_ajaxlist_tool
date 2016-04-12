@@ -9,6 +9,9 @@
     <field name="articles" type="ajaxlist" label="Articles" plugin="articles" multiple="true"/>  
     <field name="categories" type="ajaxlist" label="Categories" plugin="categories" multiple="true"/>  
     <field name="tags" type="ajaxlist" label="Tags" plugin="tags" multiple="true"/> 
+	<field name="articles" type="ajaxlist" label="Articles" plugin="articles"/> 
+    <field name="categories" type="ajaxlist" label="Categories" plugin="categories"/> 
+    <field name="tags" type="ajaxlist" label="Tags" plugin="tags"/> 
   </fieldset> 
 </form>
 ```
