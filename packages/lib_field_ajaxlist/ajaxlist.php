@@ -18,6 +18,7 @@ class JFormFieldAjaxList extends JFormFieldList {
     public $type = 'AjaxList';
     public $isNested = null;
     protected function getInput() {
+        //url create
         $oter = isset($this->element['oter'])?$this->element['oter']:'';
         $oters = explode(',',$oter);
         foreach($oters as $oter) {
@@ -32,7 +33,7 @@ class JFormFieldAjaxList extends JFormFieldList {
         }
         $urlparams = array_filter($urlparams);
         $this->url = JUri::root().'index.php?'.http_build_query($urlparams);
-
+        //chosenAjaxSettings
         $id = isset($this->element['id'])?$this->element['id']:null;
         $cssId = '#'.$this->getId($id,$this->element['name']);
         $this->method = isset($this->element['method'])?(int)$this->element['method']:'GET';
@@ -46,9 +47,18 @@ class JFormFieldAjaxList extends JFormFieldList {
             'jsonTermKey' => $this->key,
             'minTermLength' => $mintermlength));
         if(!$this->multiple) {
-            JHtml::_('formbehavior.chosen',$cssId,null,array('disable_search_threshold' => 0));
+            JHtml::_('formbehavior.chosen',$cssId,null,array('disable_search_threshold' => 0,'allow_custom_value'=>'0'));
         }
         JHtml::_('formbehavior.ajaxchosen',$chosenAjaxSettings);
+        //cssId value=null bug
+        $doc=JFactory::getDocument();
+        $doc->addScriptDeclaration('jQuery(document).ready(function (){
+            jQuery("select").change(function(){
+                if(jQuery(this).val() == null){
+                    jQuery(this).val("");
+                }
+            });
+        });');
         return parent::getInput();
     }
     protected function getOptions() {
@@ -75,7 +85,9 @@ class JFormFieldAjaxList extends JFormFieldList {
                 if(!is_object($option)) {
                     $option = (object)$option;
                 }
-                $option->selected = true;
+                if($option->value != ''){
+                    $option->selected = true;
+                }
                 $options[] = $option;
             }
         }
