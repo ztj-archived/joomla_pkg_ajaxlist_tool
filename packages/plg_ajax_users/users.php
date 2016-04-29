@@ -39,7 +39,6 @@ class plgAjaxUsers extends JPlugin {
         if(empty($rows)) {
             return json_encode(array());
         }
-        array_unshift($rows,array('value' => '','text' => ''));
         return json_encode($rows);
     }
 }

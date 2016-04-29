@@ -17,6 +17,10 @@ JFormHelper::loadFieldClass('list');
 class JFormFieldAjaxList extends JFormFieldList {
     public $type = 'AjaxList';
     public $isNested = null;
+    public function __construct($form = null) {
+        parent::__construct($form);
+        $this->setScript();
+    }
     protected function getInput() {
         //url create
         $oter = isset($this->element['oter'])?$this->element['oter']:'';
@@ -32,33 +36,26 @@ class JFormFieldAjaxList extends JFormFieldList {
             $urlparams['format'] = 'text';
         }
         $urlparams = array_filter($urlparams);
-        $this->url = JUri::root().'index.php?'.http_build_query($urlparams);
+        $this->url = JRoute::_('index.php?'.http_build_query($urlparams),false);
         //chosenAjaxSettings
         $id = isset($this->element['id'])?$this->element['id']:null;
         $cssId = '#'.$this->getId($id,$this->element['name']);
         $this->method = isset($this->element['method'])?(int)$this->element['method']:'GET';
         $this->key = isset($this->element['key'])?(int)$this->element['key']:'keyword';
-        $mintermlength = isset($this->element['mintermlength'])?(int)$this->element['mintermlength']:3;
+        $mintermlength = isset($this->element['mintermlength'])?(int)$this->element['mintermlength']:2;
+        $defaultValue = json_encode($this->value);
         $chosenAjaxSettings = new Registry(array(
             'selector' => $cssId,
+            'defaultValue' => $defaultValue,
             'type' => $this->method,
             'url' => $this->url,
+            'multiple' => $this->multiple,
+            'required' => $this->required,
             'dataType' => 'json',
             'jsonTermKey' => $this->key,
             'minTermLength' => $mintermlength));
-        if(!$this->multiple) {
-            JHtml::_('formbehavior.chosen',$cssId,null,array('disable_search_threshold' => 0,'allow_custom_value'=>'0'));
-        }
-        JHtml::_('formbehavior.ajaxchosen',$chosenAjaxSettings);
-        //cssId value=null bug
-        $doc=JFactory::getDocument();
-        $doc->addScriptDeclaration('jQuery(document).ready(function (){
-            jQuery("select").change(function(){
-                if(jQuery(this).val() == null){
-                    jQuery(this).val("");
-                }
-            });
-        });');
+        $this->setExtendAjaxChosen($chosenAjaxSettings);
+
         return parent::getInput();
     }
     protected function getOptions() {
@@ -66,57 +63,127 @@ class JFormFieldAjaxList extends JFormFieldList {
         if(!empty($this->value)) {
             if(is_object($this->value) && is_a($this->value,'JObject')) {
                 $this->value = $this->value->getProperties();
-                $value = implode(',',$this->value);
-            } elseif(is_array($this->value)) {
-                $value = implode(',',$this->value);
-            } else {
-                $value = $this->value;
             }
-            $url = $this->url.'&default=1&'.$this->key.'='.$value;
-            $json = $this->curl_file_get_contents($url);
-            $defaultOptions = json_decode($json);
-        }
-        if(empty($defaultOptions) && (!$this->multiple)) {
-            $defaultOptions = array(array('value' => '','text' => ''));
-            $defaultOptions = $defaultOptions;
-        }
-        if(!empty($defaultOptions)) {
-            foreach((array )$defaultOptions as $option) {
-                if(!is_object($option)) {
-                    $option = (object)$option;
-                }
-                if($option->value != ''){
-                    $option->selected = true;
-                }
+            foreach($this->value as $value) {
+                $option = new stdClass;
+                $option->text = $value;
+                $option->value = $value;
+                $option->selected = true;
                 $options[] = $option;
             }
         }
         return $options;
     }
-    protected function curl_file_get_contents($url) {
-        $login = isset($this->element['login'])?$this->element['login']:null;
+    protected function setExtendAjaxChosen(Registry $options) {
+        $selector = $options->get('selector','.tagfield');
+        $defaultValue = $options->get('defaultValue','null');
+        $type = $options->get('type','GET');
+        $url = $options->get('url',null);
+        $dataType = $options->get('dataType','json');
+        $jsonTermKey = $options->get('jsonTermKey','term');
+        $afterTypeDelay = $options->get('afterTypeDelay','500');
+        $minTermLength = $options->get('minTermLength','2');
+        $multiple = (int)$options->get('multiple',0);
+        $required = (int)$options->get('required',0);
 
-        $ch = curl_init();
-        switch(strtoupper($this->method)) {
-            case 'GET':
-                curl_setopt($ch,CURLOPT_HTTPGET,true);
-                break;
-            case 'POST':
-                curl_setopt($ch,CURLOPT_POST,true);
-                break;
-            case 'PUT':
-            default:
-                curl_setopt($ch,CURLOPT_CUSTOMREQUEST,strtoupper($method));
-                break;
+        $doc = JFactory::getDocument();
+        $doc->addScriptDeclaration("
+            jQuery(document).ready(function($) {
+                $('{$selector}').extendAjaxChosen({
+                    defaultValue:{$defaultValue},
+                    type: '{$type}',
+                    url: '{$url}',
+                    dataType: '{$dataType}',
+                    jsonTermKey: '{$jsonTermKey}',
+                    afterTypeDelay: '{$afterTypeDelay}',
+                    minTermLength: '{$minTermLength}',
+                    multiple: {$multiple},
+                    required: {$required},
+                },
+                function(data) {
+                    var results = [];
+                    $.each(data,
+                    function(i, val) {
+                        results.push({
+                            value: val.value,
+                            text: val.text
+                        });
+                    });
+            
+                    return results;
+                });
+            });
+        ");
+    }
+    static $isScript = false;
+    protected function setScript() {
+        if(self::$isScript) {
+            return;
         }
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_TIMEOUT,5);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        if($login) {
-            curl_setopt($ch,CURLOPT_COOKIE,apache_request_headers()['Cookie']);
-        }
-        $rs = curl_exec($ch);
-        curl_close($ch);
-        return $rs;
+        JHtml::_('jquery.framework');
+        JHtml::_('formbehavior.chosen','select');
+        JHtml::_('script','jui/ajax-chosen.min.js',false,true,false,false);
+        $doc = JFactory::getDocument();
+        $doc->addScriptDeclaration('
+            (function($) {
+                $.fn.extendAjaxChosen = function(settings, callback, chosenOptions) {
+                    //获取相关节点
+                    var nodeSelect=this;
+                    var nodeOption;
+                    //默认值和ajax
+                    var defaultValue=settings.defaultValue;
+                    if(defaultValue){
+                        var options = $.extend({}, {}, $(nodeSelect).data(), settings);
+                        options.url=settings.url+"&default=1&"+settings.jsonTermKey+"="+defaultValue;
+                        //ajax处理
+                        options.success = function(data) {
+                            if (!(data != null)) {
+                                return;
+                            }
+                            items = callback(data);
+                            $.each(items, function(i, element) {
+                                nodeOption=nodeSelect.find("option[value=\'" + element.value + "\']");
+                                if(nodeOption.length == 1){
+                                    nodeOption.text(element.text);
+                                }
+                            });
+                            
+                        }
+                        //同步处理
+                        options.async=false;
+                        //ajax查询
+                        $.ajax(options);
+                    }
+                    //单选处理
+                    if(!settings.multiple && nodeSelect.data().chosen){
+                        $("<option />").attr("value","").html("").prependTo(nodeSelect);
+                        nodeSelect.data().chosen.disable_search_threshold=0;
+                        nodeSelect.data().chosen.allow_custom_value=0;
+                    }
+                    //多选且值为空的处理
+                    if(settings.multiple && (nodeSelect.val() == null)){
+                        $("<option />").attr("value","").attr("selected","").html("").prependTo(nodeSelect);
+                        nodeSelect.chosen().change(function(){
+                            var nodeEmptyOption=nodeSelect.children("[value=\'\']");
+                            if(nodeEmptyOption.length > 0){
+                                nodeEmptyOption.remove();
+                                nodeSelect.trigger("liszt:updated");
+                            }
+                            if(nodeSelect.val() == null){
+                                $("<option />").attr("value","").attr("selected","").html("").prependTo(nodeSelect);
+                            }
+                        });
+                    }
+                    //必填处理
+                    if(!settings.required && nodeSelect.data().chosen){
+                        nodeSelect.data().chosen.allow_single_deselect=true;
+                    }
+                    //执行原始对象
+                    this.ajaxChosen(settings, callback, chosenOptions);
+                    nodeSelect.trigger("liszt:updated");
+                }
+            })(jQuery);
+        ');
+        self::$isScript = true;
     }
 }

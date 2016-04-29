@@ -11,5 +11,6 @@
     <description>Joomla Ajax Users Plugin</description>
 	<files>
 		<filename plugin="users">users.php</filename>
+        <folder>language</folder>
 	</files>
 </extension>

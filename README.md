@@ -9,7 +9,7 @@
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <form> 
-  <fieldset name="default" label="AjaxList Field Demo"> 
+  <fieldset name="basic" label="AjaxList Field Demo"> 
     <field name="articles" type="ajaxlist" label="Articles" plugin="articles" multiple="true"/>  
     <field name="categories" type="ajaxlist" label="Categories" plugin="categories" multiple="true"/>  
     <field name="tags" type="ajaxlist" label="Tags" plugin="tags" multiple="true"/> 
@@ -28,19 +28,25 @@
 * oter：其他url参数，","号分割，默认：null
 * key：ajax关键词的参数名，默认：keyword
 * aftertypedelay：用户输入内容后的延迟ajax查询时间，默认：1000
-* mintermlength：必须输入的最少字符才会触发ajax，默认：3
+* mintermlength：必须输入的最少字符才会触发ajax，默认：2
 * method：查询方法，默认：get
 * login：url是否需要登陆，默认：null。本参数测试中
 
 ##版本更新：
-&nbsp;&nbsp;&nbsp;&nbsp;2016-04-10 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.0 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;2016-04-10 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.1 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修正中文输入的支持问题 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;2016-04-11 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.2 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修正value为对象和其他bug <br>
+&nbsp;&nbsp;&nbsp;&nbsp;2016-04-29 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.4 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修正语言包 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;默认数据的获取由原来的php-curl转为js-ajax，同时ajax出错也不影响数据 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修复多处bug <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;代码整体优化，具备完整的使用模式 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;2016-04-12 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.3 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;增加支持单选 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;2016-04-11 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.2 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修正value为对象和其他bug <br>
+&nbsp;&nbsp;&nbsp;&nbsp;2016-04-10 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.1 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修正中文输入的支持问题 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;2016-04-10 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.0 <br>

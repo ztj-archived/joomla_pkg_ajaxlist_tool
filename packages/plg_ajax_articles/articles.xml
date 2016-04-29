@@ -11,5 +11,6 @@
     <description>Joomla Ajax Articles Plugin</description>
 	<files>
 		<filename plugin="articles">articles.php</filename>
+        <folder>language</folder>
 	</files>
 </extension>

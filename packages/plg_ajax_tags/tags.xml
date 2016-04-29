@@ -11,5 +11,6 @@
     <description>Joomla Ajax Tags Plugin</description>
 	<files>
 		<filename plugin="tags">tags.php</filename>
+        <folder>language</folder>
 	</files>
 </extension>
