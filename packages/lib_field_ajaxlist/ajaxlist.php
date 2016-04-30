@@ -61,10 +61,7 @@ class JFormFieldAjaxList extends JFormFieldList {
     protected function getOptions() {
         $options = parent::getOptions();
         if(!empty($this->value)) {
-            if(is_object($this->value) && is_a($this->value,'JObject')) {
-                $this->value = $this->value->getProperties();
-            }
-            foreach($this->value as $value) {
+            foreach((array)$this->value as $value) {
                 $option = new stdClass;
                 $option->text = $value;
                 $option->value = $value;
@@ -120,6 +117,8 @@ class JFormFieldAjaxList extends JFormFieldList {
         if(self::$isScript) {
             return;
         }
+  		JText::script('JGLOBAL_KEEP_TYPING');
+		JText::script('JGLOBAL_LOOKING_FOR');
         JHtml::_('jquery.framework');
         JHtml::_('formbehavior.chosen','select');
         JHtml::_('script','jui/ajax-chosen.min.js',false,true,false,false);

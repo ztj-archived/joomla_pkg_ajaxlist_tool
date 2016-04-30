@@ -33,7 +33,7 @@
 * login：url是否需要登陆，默认：null。本参数测试中
 
 ##版本更新：
-&nbsp;&nbsp;&nbsp;&nbsp;2016-04-29 <br>
+&nbsp;&nbsp;&nbsp;&nbsp;2016-04-30 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布版本V1.4 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修正语言包 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;默认数据的获取由原来的php-curl转为js-ajax，同时ajax出错也不影响数据 <br>
