@@ -163,6 +163,7 @@ class JFormFieldAjaxList extends JFormFieldList {
                         //多选值为null的处理
                         if(nodeSelect.val() == null){
                             $("<option />").attr("value","").attr("selected","").html("").prependTo(nodeSelect);
+                            nodeSelect.trigger("liszt:updated");
                         }
                         //多选的改变事件
                         nodeSelect.chosen().change(function(){
@@ -173,6 +174,7 @@ class JFormFieldAjaxList extends JFormFieldList {
                             }
                             if(nodeSelect.val() == null){
                                 $("<option />").attr("value","").attr("selected","").html("").prependTo(nodeSelect);
+                                nodeSelect.trigger("liszt:updated");
                             }
                         });
                     }
