@@ -131,7 +131,7 @@ class JFormFieldAjaxList extends JFormFieldList {
                     var nodeOption;
                     //默认值和ajax
                     var defaultValue=settings.defaultValue;
-                    if(defaultValue){
+                    if(defaultValue && defaultValue != ""){
                         var options = $.extend({}, {}, $(nodeSelect).data(), settings);
                         options.url=settings.url+"&default=1&"+settings.jsonTermKey+"="+defaultValue;
                         //ajax处理
@@ -146,10 +146,9 @@ class JFormFieldAjaxList extends JFormFieldList {
                                     nodeOption.text(element.text);
                                 }
                             });
+                            nodeSelect.trigger("liszt:updated");
                             
                         }
-                        //同步处理
-                        options.async=false;
                         //ajax查询
                         $.ajax(options);
                     }
@@ -159,9 +158,13 @@ class JFormFieldAjaxList extends JFormFieldList {
                         nodeSelect.data().chosen.disable_search_threshold=0;
                         nodeSelect.data().chosen.allow_custom_value=0;
                     }
-                    //多选且值为空的处理
-                    if(settings.multiple && (nodeSelect.val() == null)){
-                        $("<option />").attr("value","").attr("selected","").html("").prependTo(nodeSelect);
+                    //多选处理
+                    if(settings.multiple){
+                        //多选值为null的处理
+                        if(nodeSelect.val() == null){
+                            $("<option />").attr("value","").attr("selected","").html("").prependTo(nodeSelect);
+                        }
+                        //多选的改变事件
                         nodeSelect.chosen().change(function(){
                             var nodeEmptyOption=nodeSelect.children("[value=\'\']");
                             if(nodeEmptyOption.length > 0){
